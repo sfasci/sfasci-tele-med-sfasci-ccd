@@ -1,0 +1,34 @@
+Possibili estensioni: DA REALIZZARE IN PARALLELO SUDDIVIDENDOSI IN GRUPPI !
+
+Lo scopo di questo esercizio e' di interagire quindi si deve evitare di pushare sul
+   repository dei branch individuali.
+
+-) Creare altre Strategie: multiplo, potenza, fattoriale, random all'interno di un range (e.g. 1-100), etc...
+
+-) Mostrare un messaggio che descriva la Strategia scelta prima di iniziare a contare 
+    (il messaggio deve essere generato da parte dell'Engine che tuttavia NON deve accedere
+    	a System.in System.out System.err);
+    	
+-) Cambiare il modo in cui si sceglie la strategia di conto, facendola scegliere interattivamente 
+	(e.g. dallo standard input e non sulla riga di comando);
+
+-) Fare si che dopo aver scelto la strategia la si possa configurare (e.g. impostare
+    un limite massimo superato il quale smette di contare, quale multiplo usare, etc..).
+    La configurazione sara' funzione della strategia stessa. (Anche in questo caso l'Engine
+    NON deve accedere a System.in System.out System.err)
+
+-) Fare in modo che la strategia possa comunicare che si e' superato il limite massimo delle
+    sue capacita' di calcolo (i.e. quando finisce di contare si mostra un messaggio e si smette);
+
+-) Fare in modo che quando si e' finito di contare si forniscano delle statistiche opzionali (e.g.
+    quanti numeri sono usciti, minimo e massimo.
+
+-) Fare in modo che alla fine venga mostrata la lista dei numeri eventualmente ordinandola  in senso
+        crescente o decrescente (nella strategia Random i numeri saranno sicuramente fuori ordine).
+
+-) Anziche' usare lo Standard Input e Standard Output (System.in / System.out) si cerchi di dotare 
+    l'applicazione di una GUI e si faccia in modo che si possano scambiare le informazioni di configurazioni 
+    e di output utilizzando quella.
+
+
+
