@@ -7,9 +7,11 @@ import java.util.List;
 
 //==============================================================================
 public class CountingFactory implements CountingFactoryIF {
-    private static List strategies = new ArrayList<String>() ;
+    private static List strategies = new ArrayList<String>();
+    
     static {
         strategies.add("sample");
+        strategies.add("power");
     }
     //=================================================
     /** 
@@ -22,6 +24,8 @@ public class CountingFactory implements CountingFactoryIF {
         switch (method) {
             case "sample":
                 return new SampleEngine();
+            case "power":
+                return new PowerEngine();
         }
         return null;
     }
