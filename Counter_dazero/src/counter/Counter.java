@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 public class Counter {
     
     //commento di prova riky
+    
+    
+    
 
     //==========================================================================
     //==========================================================================
@@ -20,6 +23,8 @@ public class Counter {
      * @param args 
      */
     public static void main(String[] args) {
+        
+        System.out.println("Vediamo se funziona!!!");
         
         Counter counter = new Counter();
         counter.doCount(args);
