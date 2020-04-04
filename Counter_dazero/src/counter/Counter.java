@@ -4,18 +4,12 @@ import counter.interfaces.CountingEngineIF;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 //==============================================================================
 public class Counter {
     
-    //commento di prova riky
-    
-    
-    
-
     //==========================================================================
     //==========================================================================
     /** 
@@ -24,9 +18,7 @@ public class Counter {
      * @param args 
      */
     public static void main(String[] args) {
-        
-        System.out.println("Vediamo se funziona!!!");
-        
+                
         Counter counter = new Counter();
         counter.doCount();
     }

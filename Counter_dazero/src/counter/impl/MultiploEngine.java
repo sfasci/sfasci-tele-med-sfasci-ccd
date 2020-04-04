@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package counter.impl.nuovemod;
+package counter.impl;
 import counter.interfaces.CountingEngineIF;
 /**
  *
@@ -11,13 +11,16 @@ import counter.interfaces.CountingEngineIF;
  */
 public class MultiploEngine implements CountingEngineIF{
 
-    private int c=1;
+    private int c = 1;
     
     @Override
     public Object getNext() {
-    
-        return c*=2;    
-        
+        return c*=2;     
+    }
+
+    @Override
+    public String getInfo() {
+        return "Questa strategia restituisce il multiplo di 2 di counter.\n";
     }
     
 }

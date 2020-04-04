@@ -13,6 +13,7 @@ public class CountingFactory implements CountingFactoryIF {
     static {
         strategies.add("sample");
         strategies.add("power");
+        strategies.add("multiplo");
     }
     //=================================================
     /** 
@@ -27,6 +28,8 @@ public class CountingFactory implements CountingFactoryIF {
                 return new SampleEngine();
             case "power":
                 return new PowerEngine();
+            case "multiplo":
+                return new MultiploEngine();
         }
         return null;
     }
