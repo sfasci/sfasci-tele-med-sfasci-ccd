@@ -14,4 +14,9 @@ public class SampleEngine implements CountingEngineIF {
     }
     
     //==============================    
+
+    @Override
+    public String getInfo() {
+        return "Questa strategia incrementa il counter di 1 ogni volta.\n";
+    }
 }

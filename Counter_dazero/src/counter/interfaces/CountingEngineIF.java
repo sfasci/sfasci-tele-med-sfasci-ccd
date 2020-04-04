@@ -17,7 +17,9 @@ public interface CountingEngineIF {
      */
     public Object getNext();
     //==========================================================================
-    /** Information about the Engine ??? */
-    // public String getInfo();
+    
+    /** Information about the Engine
+     * @return  **/
+     public String getInfo();
     //==========================================================================    
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 //==============================================================================
 public class CountingFactory implements CountingFactoryIF {
+    
     private static List strategies = new ArrayList<String>();
     
     static {

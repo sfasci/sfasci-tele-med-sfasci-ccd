@@ -4,6 +4,7 @@ import counter.interfaces.CountingEngineIF;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ public class Counter {
     public static void main(String[] args) {
         
         Counter counter = new Counter();
-        counter.doCount(args);
+        counter.doCount();
     }
     //==========================================================================
     //==========================================================================
@@ -42,13 +43,16 @@ public class Counter {
      * 
      * @param args 
      */
-    private void doCount (String[] args) {
+    private void doCount () {
         // Instantiate the Factory
         CountingFactoryIF factory = resolveFactory();
         if (factory == null) System.exit(1);
         
+        // Getting strategy from user input
+        String[] strategies = getChoosedStrategy();
+        
         // Creates the Engine
-        CountingEngineIF engine = instantiateEngine(args, factory);
+        CountingEngineIF engine = instantiateEngine(strategies, factory);
         if (engine == null) System.exit(1);
         
         cycle(engine);
@@ -81,19 +85,20 @@ public class Counter {
     }
     
     //==========================================================================
-    private CountingEngineIF instantiateEngine(String[] args, CountingFactoryIF factory) {
+    private CountingEngineIF instantiateEngine(String[] strategies, CountingFactoryIF factory) {
         // Check if a counting strategy has been properly passed
-        if (args.length != 1) {
+        if (strategies.length != 1) {
             this.logger.log(Level.SEVERE, "No counting strategy given");
             return null;
         }
+        
         // Check if the strategy is really available
-        CountingEngineIF engine = factory.getEngine(args[0]);
+        CountingEngineIF engine = factory.getEngine(strategies[0]);
         
         // If the strategy has not been recognized inform the user
         if (engine == null) {
             StringBuilder builder = new StringBuilder();
-            builder.append("Unable to implement strategy: ").append(args[0]).append("\n");            
+            builder.append("Unable to implement strategy: ").append(strategies[0]).append("\n");            
             builder.append("Available strategies are: ").append("\n");
             for (String s: factory.getStrategies()) builder.append("    ").append(s).append("\n");
             logger.log(Level.SEVERE, builder.toString());
@@ -103,9 +108,15 @@ public class Counter {
         
     //==========================================================================
     private void cycle (CountingEngineIF engine) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println(engine.getInfo());
+        
+        BufferedReader reader = null;
+        
         // Start the Cycle counting forever
         try {
+            reader = new BufferedReader(new InputStreamReader(System.in));
+            
             for (;;) {
                 System.out.print("Print Next (Y/N)? ");
                 String input = reader.readLine();
@@ -119,12 +130,59 @@ public class Counter {
                 else
                     break;
             }
-        }
-        
-        catch (IOException ex) {
+        }catch (IOException ex) {
             logger.log(Level.SEVERE, "Standard Input failure ?!?");
+        }finally{
+            if(reader != null){
+                try {
+                    reader.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Counter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
    
     //==========================================================================
+    private static String[] getChoosedStrategy(){
+        System.out.println("Insert your strategy: ");
+        // Interact with the user from Standard Input (keyboard)
+        BufferedReader br = null;
+        String[] strategies = null;
+        // Chiedo all'utente di inserire la strategia fino a quando non c'è una 
+        // keyword corretta.
+        
+        try{
+            br = new BufferedReader(new InputStreamReader(System.in));
+                strategies = br.readLine().split("\\s");
+        } catch (IOException ex) {
+            Logger.getLogger(Counter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /**
+         * 
+        finally{
+            if(br != null){
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Counter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        * 
+        * 
+        * ============================= ATTENZIONE =============================
+        * 
+        * Non posso chiudere lo stream se poi lo devo utilizzare di nuovo!!!
+        * Successivamente il programma chiede all'utente di inserire nuovamente
+        * da tastiera Y/N per incrementare il counter.
+        * 
+        * Se chiudessi lo stream provocherei una IOException = Stream closed
+        * poichè quando chiudo uno stream non posso più riaprirlo!
+        * 
+        **/
+        
+        return strategies;
+    }
+            
 }

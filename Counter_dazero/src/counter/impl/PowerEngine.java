@@ -19,5 +19,10 @@ public class PowerEngine implements CountingEngineIF{
     public Object getNext() {
         return counter*=2;
     }
+
+    @Override
+    public String getInfo() {
+        return "Questa strategia moltiplica il counter per 2 ogni volta.\n";
+    }
     
 }
