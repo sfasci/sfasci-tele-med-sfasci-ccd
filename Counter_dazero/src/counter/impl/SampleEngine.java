@@ -7,15 +7,15 @@ import exceptionpkg.BoundException;
  */
 public class SampleEngine implements CountingEngineIF {
     
-    private int counter = 0;
-    private boolean valueSet = false;
-    private int upperBound = 0;
+    private int counter = 0;            // default
+    private int increment = 1;          // by default increment by 1
+    private int upperBound = 100;       // default
     
     //==============================
     @Override
     public Object getNext() throws BoundException{
-        
-        if(valueSet){ this.isOutOfBound(++counter); }
+
+        this.isOutOfBound(counter+=increment); 
         
         return counter;
     }
@@ -24,19 +24,31 @@ public class SampleEngine implements CountingEngineIF {
 
     @Override
     public String getInfo() {
-        return "Questa strategia incrementa il counter di 1 ogni volta.\n";
+        return "\nHai scelto la strategia SAMPLE\n"
+                + "Questo counter inizia a contare da " + this.counter 
+                + ", termina a " + this.upperBound
+                + " e incrementa di " + this.increment;
     }
 
     @Override
     public void setUpperBound(int bound) {
         this.upperBound = bound;
-        this.valueSet = true;
     }
 
     @Override
     public void isOutOfBound(int value) throws BoundException {
-        if(value > this.upperBound){
+        if(Math.abs(value) >= Math.abs(this.upperBound)){
             throw new BoundException("Exceed the upper bound.");
         }
+    }
+
+    @Override
+    public void setInitialValue(int value) {
+        this.counter = value;
+    }
+
+    @Override
+    public void setIncrementValue(int value) {
+        this.increment = value;
     }
 }

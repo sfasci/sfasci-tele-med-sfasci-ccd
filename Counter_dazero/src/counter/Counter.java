@@ -159,7 +159,7 @@ public class Counter {
         
         try{
             br = new BufferedReader(new InputStreamReader(System.in));
-                strategies = br.readLine().split("\\s");
+            strategies = br.readLine().split("\\s");
         } catch (IOException ex) {
             Logger.getLogger(Counter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -194,27 +194,69 @@ public class Counter {
     private void personalizedStrategy(CountingEngineIF engine){
         
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String line;
+        String lineParam;
+        String lineValue;
+        int param;
         int value;
         
         loop: while(true){
             
             try{
-                System.out.println("Insert the upper bound for this strategy: ");
-
-                    // Reading the upperBound value from command line
-                    line = reader.readLine();
+                System.out.println("Inserisci un valore intero tra 1, 2 e 3 per configurare la strategia. Scrivi 'STOP' quando hai configurato il counter!");
+                // Reading the upperBound value from command line
+                lineParam = reader.readLine();
+                
+                if(lineParam.equals("STOP") || lineParam.equals("stop")){
+                   break loop;
+                }else{
                     // Parsing the value
-                    value = Integer.parseInt(line);
-                    // Checking if positive
-                    if(value < 0){
-                        System.err.println("Devi inserire un intero positivo!");
-                        continue;
-                    }else{
-                        // Setting upper bound
-                        engine.setUpperBound(value);
-                        break loop;
+                    param = Integer.parseInt(lineParam);                    
+// =============================================================================
+                    switch(param){
+                        /* UPPER BOUND */
+                        case 1: 
+                            System.out.println("Insert the upper bound for this strategy: ");
+                            lineValue = reader.readLine();
+                            value = Integer.parseInt(lineValue);
+                            // Setting upper bound
+                            engine.setUpperBound(value);
+                            continue;
+
+                        /* INITIAL VALUE */
+                        case 2:
+                            System.out.println("Insert the initial value for this strategy: ");
+                            lineValue = reader.readLine();
+                            value = Integer.parseInt(lineValue);
+                            engine.setInitialValue(value);
+                            /** 
+                             * Qui continue è importante perchè forza il ciclo
+                             * a terminare e ad iniziarne uno nuovo!! 
+                             * 
+                             * Se non lo mettessi mi chiederebbe in cascata di 
+                             * inserire tutti i valori personalizzabili possibili.
+                             */
+                            continue;
+                            
+                        /* INCREMENT */    
+                        case 3:
+                            System.out.println("Insert the increment value for this strategy: ");
+                            lineValue = reader.readLine();
+                            value = Integer.parseInt(lineValue);
+                            if(value < 0){
+                                System.err.println("Only positive value for this parameter!");
+                                continue;
+                            }else{
+                                // Setting the increment
+                                engine.setIncrementValue(value);
+                                continue;
+                            }
+                            
                     }
+// ============================================================================= 
+                }
+                    
+                    
+                    
 
             }catch(NumberFormatException ex){
                 System.err.println("Format error! Please insert a positive integer!");
