@@ -1,6 +1,7 @@
 package counter;
 import counter.interfaces.CountingFactoryIF;
 import counter.interfaces.CountingEngineIF;
+import exceptionpkg.BoundException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -53,6 +54,9 @@ public class Counter {
         // Creates the Engine
         CountingEngineIF engine = instantiateEngine(strategies, factory);
         if (engine == null) System.exit(1);
+        
+        // Setting strategy
+        personalizedStrategy(engine);
         
         cycle(engine);
     }    
@@ -131,6 +135,8 @@ public class Counter {
             }
         }catch (IOException ex) {
             logger.log(Level.SEVERE, "Standard Input failure ?!?");
+        } catch (BoundException ex) {
+            logger.log(Level.SEVERE, "Exceed the upper bound!");
         }finally{
             if(reader != null){
                 try {
@@ -143,7 +149,7 @@ public class Counter {
     }
    
     //==========================================================================
-    private static String[] getChoosedStrategy(){
+    private String[] getChoosedStrategy(){
         System.out.println("Insert your strategy: ");
         // Interact with the user from Standard Input (keyboard)
         BufferedReader br = null;
@@ -183,5 +189,42 @@ public class Counter {
         
         return strategies;
     }
+    
+    
+    private void personalizedStrategy(CountingEngineIF engine){
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        int value;
+        
+        loop: while(true){
+            
+            try{
+                System.out.println("Insert the upper bound for this strategy: ");
+
+                    // Reading the upperBound value from command line
+                    line = reader.readLine();
+                    // Parsing the value
+                    value = Integer.parseInt(line);
+                    // Checking if positive
+                    if(value < 0){
+                        System.err.println("Devi inserire un intero positivo!");
+                        continue;
+                    }else{
+                        // Setting upper bound
+                        engine.setUpperBound(value);
+                        break loop;
+                    }
+
+            }catch(NumberFormatException ex){
+                System.err.println("Format error! Please insert a positive integer!");
+            } catch (IOException ex) {
+                logger.log(Level.SEVERE, "Standard input failure.");
+                break;
+            }
+        }
+        
+    }
+    
             
 }

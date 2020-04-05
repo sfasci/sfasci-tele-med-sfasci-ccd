@@ -1,5 +1,7 @@
 package counter.interfaces;
 
+import exceptionpkg.BoundException;
+
 //==============================================================================
 /** 
  * Interface defining the contract of a Counting Engine (Strategy).
@@ -15,11 +17,22 @@ public interface CountingEngineIF {
      * 
      * @return The next counting object.
      */
-    public Object getNext();
+    public Object getNext() throws BoundException;
     //==========================================================================
     
     /** Information about the Engine
      * @return  **/
      public String getInfo();
-    //==========================================================================    
+    //==========================================================================  
+     
+     /** Setting the upper bound
+      * @param bound **/
+     public void setUpperBound(int bound);
+     //=========================================================================
+     
+     
+     public void isOutOfBound(int value) throws BoundException;
+     //=========================================================================
+     
+     
 }
